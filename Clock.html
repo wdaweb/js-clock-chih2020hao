@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clock</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ranchers&display=swap" rel="stylesheet" />
+    <style>
+      html,
+      body {
+        height: 100%;
+        font-family: "Ranchers", cursive;
+        text-align: center;
+        background: url(./h2Background.png) no-repeat center center/cover;
+      }
+      body {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+        margin: 0;
+        font-size: 1.5rem;
+        display: flex;
+        flex: 1;
+        min-height: 100vh;
+        align-items: center;
+      }
+      #date {
+        position: absolute;
+        top: 80%;
+        left: 55%;
+        font-size: 3rem;
+        transform: translateX(-50%);
+        color: deeppink;
+        text-shadow: 0px 0px 5px rgba(241, 71, 156, 1), 0px 0px 25px rgba(241, 71, 156, 0.8),
+          0px 0px 50px rgba(241, 71, 156, 0.5), 0px 0px 150px rgba(241, 71, 156, 0.3);
+      }
+      .clock {
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        margin: 50px auto;
+        position: relative;
+        padding: 1.5rem;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+      }
+      .clockface {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 20px solid white;
+        transform: translate(-45px, -45px);
+        box-shadow: 0px 0px 5px rgba(122, 206, 240, 1), 0px 0px 25px rgba(122, 206, 240, 0.8),
+          0px 0px 50px rgba(122, 206, 240, 0.5), 0px 0px 150px rgba(0, 0, 0, 0.3);
+        animation: breathing 15s infinite;
+      }
+      .hands {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .hand {
+        width: 50%;
+        height: 8px;
+        position: absolute;
+        top: 50%;
+        border-radius: 5px;
+        transform: translateY(-50%) rotate(90deg);
+        transform-origin: right center;
+      }
+      .secondhand {
+        background: cornflowerblue;
+        box-shadow: 0px 0px 5px rgba(78, 238, 250, 1), 0px 0px 25px rgba(78, 238, 250, 0.8),
+          0px 0px 50px rgba(78, 238, 250, 0.5);
+      }
+      .minutehand {
+        background: darkorchid;
+        box-shadow: 0px 0px 5px rgba(220, 43, 236, 1), 0px 0px 25px rgba(220, 43, 236, 0.8),
+          0px 0px 50px rgba(220, 43, 236, 0.5);
+      }
+      .hourhand {
+        background: hotpink;
+        left: 25%;
+        width: 25%;
+        box-shadow: 0px 0px 5px rgba(243, 79, 180, 1), 0px 0px 25px rgba(243, 79, 180, 0.8),
+          0px 0px 50px rgba(243, 79, 180, 0.5);
+      }
+      kbd {
+        display: block;
+        font-size: 4rem;
+      }
+      .keys {
+        width: 10rem;
+      }
+      .key {
+        border: 0.4rem solid rgb(94, 245, 199);
+        border-radius: 1rem;
+        margin: 1rem;
+        font-size: 1.5rem;
+        padding: 1rem 0.5rem;
+        transition: all 0.07s ease;
+        width: 10rem;
+        text-align: center;
+        color: skyblue;
+        text-shadow: 0 0 0.5rem black;
+      }
+      .US {
+        background: url(./america.png) no-repeat center center/cover;
+      }
+      .TW {
+        background: url(./taiwan.png) no-repeat center center/cover;
+      }
+      .JP {
+        background: url(./japan.png) no-repeat center center/cover;
+      }
+      .UK {
+        background: url(./england.png) no-repeat center center/cover;
+      }
+      .keys span {
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+        color: royalblue;
+      }
+      .boxshadow {
+        box-shadow: 0px 0px 5px rgba(94, 245, 199, 1), 0px 0px 25px rgba(94, 245, 199, 0.8),
+          0px 0px 50px rgba(94, 245, 199, 0.5);
+      }
+      .nums {
+        position: absolute;
+        width: 95%;
+        height: 95%;
+        top: 2.5%;
+        left: 2.5%;
+        color: lime;
+        text-shadow: 0px 0px 5px rgb(140, 238, 94, 1), 0px 0px 25px rgba(140, 238, 94, 0.8),
+          0px 0px 50px rgba(140, 238, 94, 0.5);
+      }
+      .num {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      .num span {
+        position: absolute;
+        left: 47.5%;
+      }
+      @keyframes breathing {
+        0% {
+          filter: hue-rotate(0deg);
+        }
+        25% {
+          filter: hue-rotate(90deg);
+        }
+        50% {
+          filter: hue-rotate(180deg);
+        }
+        75% {
+          filter: hue-rotate(270deg);
+        }
+        100% {
+          filter: hue-rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="keys">
+      <span>Change TimeZone</span>
+      <div data-key="65" class="key US">
+        <kbd>A</kbd>
+        <span>America</span>
+      </div>
+      <div data-key="84" class="key TW boxshadow">
+        <kbd>T</kbd>
+        <span>Taiwan</span>
+      </div>
+      <div data-key="74" class="key JP">
+        <kbd>J</kbd>
+        <span>Japan</span>
+      </div>
+      <div data-key="69" class="key UK">
+        <kbd>E</kbd>
+        <span>England</span>
+      </div>
+    </div>
+    <div class="clock">
+      <div class="clockface"></div>
+      <div class="hands">
+        <div class="hand secondhand"></div>
+        <div class="hand minutehand"></div>
+        <div class="hand hourhand"></div>
+      </div>
+      <div class="nums">
+        <div class="num"><span class="number">&nbsp;1</span></div>
+        <div class="num"><span class="number">&nbsp;2</span></div>
+        <div class="num"><span class="number">&nbsp;3</span></div>
+        <div class="num"><span class="number">&nbsp;4</span></div>
+        <div class="num"><span class="number">&nbsp;5</span></div>
+        <div class="num"><span class="number">&nbsp;6</span></div>
+        <div class="num"><span class="number">&nbsp;7</span></div>
+        <div class="num"><span class="number">&nbsp;8</span></div>
+        <div class="num"><span class="number">&nbsp;9</span></div>
+        <div class="num"><span class="number">10</span></div>
+        <div class="num"><span class="number">11</span></div>
+        <div class="num"><span class="number">12</span></div>
+      </div>
+    </div>
+    <div id="date"></div>
+    <script>
+      const sec = document.querySelector(".secondhand");
+      const min = document.querySelector(".minutehand");
+      const hour = document.querySelector(".hourhand");
+      const date = document.querySelector("#date");
+      let tz = "Asia/Taipei";
+      let TZ = "Taiwan";
+
+      const setTimeZone = (e) => {
+        document.querySelectorAll(".key").forEach((key) => {
+          key.classList.remove("boxshadow");
+        });
+        document.querySelector(`div[data-key="${e.keyCode}"]`).classList.add("boxshadow");
+        if (e.keyCode == 84) {
+          tz = "Asia/Taipei";
+          TZ = "Taiwan";
+        } else if (e.keyCode == 74) {
+          tz = "Asia/Tokyo";
+          TZ = "Japan";
+        } else if (e.keyCode == 65) {
+          tz = "America/New_York";
+          TZ = "America";
+        } else if (e.keyCode == 69) {
+          tz = "Europe/London";
+          TZ = "England";
+        }
+      };
+
+      const setDate = () => {
+        let options = {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+          timeZone: `${tz}`,
+        };
+        const now = new Date();
+
+        const s = now.getSeconds();
+        const Ms = now.getMilliseconds();
+        sec.style.transform = `rotate(${s * 6 + Ms * 0.006 + 90}deg)`;
+
+        const m = now.getMinutes();
+        min.style.transform = `rotate(${m * 6 + 90}deg)`;
+
+        const hours = now.getHours();
+        hour.style.transform = `rotate(${hours * 30 + m / 2 + 90}deg)`;
+
+        date.innerHTML = now.toLocaleString("zh-TW", options) + ",(" + TZ + ")";
+      };
+
+      const numbers = () => {
+        const num = document.querySelectorAll(".num");
+        const number = document.querySelectorAll(".number");
+        for (let i = 1; i <= 12; i++) {
+          num[i - 1].style.transform = `rotate(${i * 30}deg)`;
+          number[i - 1].style.transform = `rotate(${360 - i * 30}deg)`;
+        }
+      };
+
+      setInterval(setDate, 10);
+      setDate();
+      numbers();
+
+      window.addEventListener("keydown", setTimeZone);
+    </script>
+  </body>
+</html>
