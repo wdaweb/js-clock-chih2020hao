@@ -36,7 +36,7 @@
         width: 400px;
         height: 400px;
         border-radius: 50%;
-        margin: 50px auto;
+        margin: auto;
         position: relative;
         padding: 1.5rem;
         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
@@ -88,12 +88,17 @@
         font-size: 4rem;
       }
       .keys {
-        width: 10rem;
+        width: 200px;
+      }
+      .keys span {
+        margin: auto;
+        font-size: 1.2rem;
+        color: white;
       }
       .key {
         border: 0.4rem solid rgb(94, 245, 199);
         border-radius: 1rem;
-        margin: 1rem;
+        margin: 0.5rem;
         font-size: 1.5rem;
         padding: 1rem 0.5rem;
         transition: all 0.07s ease;
@@ -114,11 +119,14 @@
       .UK {
         background: url(./england.png) no-repeat center center/cover;
       }
-      .keys span {
+      .key span {
         font-size: 1.2rem;
         text-transform: uppercase;
         letter-spacing: 0.1rem;
         color: royalblue;
+      }
+      .key:hover {
+        cursor: pointer;
       }
       .boxshadow {
         box-shadow: 0px 0px 5px rgba(94, 245, 199, 1), 0px 0px 25px rgba(94, 245, 199, 0.8),
@@ -164,22 +172,22 @@
   </head>
   <body>
     <div class="keys">
-      <span>Change TimeZone</span>
-      <div data-key="65" class="key US">
-        <kbd>A</kbd>
-        <span>America</span>
+      <span>點擊以下方框或按下對應按鍵以切換時區</span>
+      <div id="Taiwan" data-key="84" class="key TW boxshadow">
+        <kbd id="Taiwan1">T</kbd>
+        <span id="Taiwan2">Taiwan</span>
       </div>
-      <div data-key="84" class="key TW boxshadow">
-        <kbd>T</kbd>
-        <span>Taiwan</span>
+      <div id="America" data-key="65" class="key US">
+        <kbd id="America1">A</kbd>
+        <span id="America2">America</span>
       </div>
-      <div data-key="74" class="key JP">
-        <kbd>J</kbd>
-        <span>Japan</span>
+      <div id="Japan" data-key="74" class="key JP">
+        <kbd id="Japan1">J</kbd>
+        <span id="Japan2">Japan</span>
       </div>
-      <div data-key="69" class="key UK">
-        <kbd>E</kbd>
-        <span>England</span>
+      <div id="England" data-key="69" class="key UK">
+        <kbd id="England1">E</kbd>
+        <span id="England2">England</span>
       </div>
     </div>
     <div class="clock">
@@ -210,7 +218,7 @@
       const min = document.querySelector(".minutehand");
       const hour = document.querySelector(".hourhand");
       const date = document.querySelector("#date");
-      alert("按下對應的按鍵以切換時區");
+      const changes = document.querySelectorAll(".key");
       let tz = "Asia/Taipei";
       let TZ = "Taiwan";
 
@@ -231,6 +239,30 @@
         } else if (e.keyCode == 69) {
           tz = "Europe/London";
           TZ = "England";
+        }
+      };
+
+      const SetTimeZone = (e) => {
+        const zone = e.target.id;
+        changes.forEach((change) => {
+          change.classList.remove("boxshadow");
+        });
+        if (zone.includes("Taiwan")) {
+          tz = "Asia/Taipei";
+          TZ = "Taiwan";
+          document.querySelector("#Taiwan").classList.add("boxshadow");
+        } else if (zone.includes("Japan")) {
+          tz = "Asia/Tokyo";
+          TZ = "Japan";
+          document.querySelector("#Japan").classList.add("boxshadow");
+        } else if (zone.includes("America")) {
+          tz = "America/New_York";
+          TZ = "America";
+          document.querySelector("#America").classList.add("boxshadow");
+        } else if (zone.includes("England")) {
+          tz = "Europe/London";
+          TZ = "England";
+          document.querySelector("#England").classList.add("boxshadow");
         }
       };
 
@@ -272,8 +304,8 @@
       setInterval(setDate, 10);
       setDate();
       numbers();
-
       window.addEventListener("keydown", setTimeZone);
+      changes.forEach((change) => change.addEventListener("click", SetTimeZone));
     </script>
   </body>
 </html>
